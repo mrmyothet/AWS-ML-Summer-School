@@ -10,5 +10,17 @@ chmod 0700 ~/Downloads/aws-ml-summer-school.pem
 sudo yum update -y
 sudo yum install -y python3 python3-pip
 
-pip3 install numpy pandas scikit-learn matplotlib --user
+pip3 install numpy pandas sklearn matplotlib --user
+```
+
+### EC2 access to S3
+
+```bash
+aws --version
+aws configure
+
+cat ~/.aws/credentials
+
+aws s3 ls s3://aws-ml-summer-school-043841769286/iris-xgb/data/
+
 ```
