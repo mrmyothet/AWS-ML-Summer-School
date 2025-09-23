@@ -24,3 +24,15 @@ cat ~/.aws/credentials
 aws s3 ls s3://aws-ml-summer-school-043841769286/iris-xgb/data/
 
 ```
+
+### AWS CLI
+
+```bash
+aws ec2 run-instances \
+  --image-id ami-0c3fd0f5d33134a76 \
+  --instance-type t2.micro \
+  --key-name aws-ml-summer-school \
+  --security-groups launch-wizard-1 \
+  --count 1 \
+  --region ap-southeast-1
+```
