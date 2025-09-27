@@ -31,4 +31,4 @@ accuracy = np.sum(y_test == y_pred) / len(y_test)
 print("Model Accuracy: ", accuracy)
 
 # Save the model
-dump(gnb, "week2.joblib")
+dump(gnb, "group_1_project.joblib")
