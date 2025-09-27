@@ -66,3 +66,7 @@ print("Model Accuracy: ", accuracy)
 
 # Save the model
 dump(gnb, "group_1_project.joblib")
+s3.upload_file(
+    "group_1_project.joblib", bucket_name, "iris-xgb/model/group_1_project.joblib"
+)
+print("Model uploaded to S3")
