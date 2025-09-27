@@ -1,14 +1,9 @@
-FROM python:3.13-slim
-
-WORKDIR /app
-
-# Upgrade system packages to address vulnerabilities
-RUN apt-get update && apt-get upgrade -y && apt-get clean
+FROM public.ecr.aws/lambda/python:3.11
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -t ${LAMBDA_TASK_ROOT}
 
-COPY app.py .
+COPY predict.py ${LAMBDA_TASK_ROOT}
 
-CMD ["python", "app.py"]
+CMD ["predict.handler"]
