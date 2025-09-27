@@ -1,4 +1,11 @@
 import json
+import boto3
+import os
+from dotenv import load_dotenv
+from joblib import load
+import numpy as np
+
+load_dotenv()
 
 
 def lambda_handler(event, context):
@@ -14,7 +21,35 @@ def lambda_handler(event, context):
             user_input = "Invalid User Input..."
 
         result = "Starting inferencing..."
+
+        AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+        AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+        REGION_NAME = os.getenv("REGION_NAME")
+
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME,
+        )
+
+        bucket_name = "aws-ml-summer-school-043841769286"
+        file_key = "iris-xgb/model/group_1_project.joblib"
+
+        s3.download_file(bucket_name, file_key, "/tmp/group_1_project.joblib")
+
+        loaded_model = load("/tmp/group_1_project.joblib")
+
+        features = np.array(user_input).reshape(1, -1)
+        prediction = loaded_model.predict(features)
+        result = (
+            prediction[0].item() if isinstance(prediction, np.ndarray) else prediction
+        )
+
         return {"statusCode": 200, "body": f"Result: {result}"}
 
     except Exception as e:
         return {"statusCode": 400, "body": f"Error: {e}"}
+
+
+lambda_handler({"body": '{"input": [5.1, 3.5, 1.4, 0.2]}'}, "")
