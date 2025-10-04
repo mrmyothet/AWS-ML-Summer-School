@@ -38,7 +38,8 @@ aws ec2 run-instances \
 ```
 
 ### Push docker image to Amazon ECR
-```bash 
+
+```bash
 aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 043841769286.dkr.ecr.ap-southeast-1.amazonaws.com
 
 docker build -t first-ml-app-container .
@@ -48,3 +49,8 @@ docker tag first-ml-app-container:latest 043841769286.dkr.ecr.ap-southeast-1.ama
 
 docker push 043841769286.dkr.ecr.ap-southeast-1.amazonaws.com/first-ml-app-container:latest
 ```
+
+### Reference Links
+
+- https://s3.us-east-1.amazonaws.com/media.sundog-soft.com/MLA-C01/AWS-Certified-ML-Engineer-Associate-Slides.pdf
+- https://www.examtopics.com/exams/amazon/
